@@ -1,0 +1,15 @@
+[project]
+name = "my-algorithms"
+version = "0.1.0"
+description = "手写实现经典算法（排序 / 动态规划 / 图论），配套 pytest 单元测试"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+python_files = ["test_*.py"]
+
+[tool.coverage.run]
+source = ["myalgo"]
+branch = true
