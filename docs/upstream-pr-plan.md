@@ -142,3 +142,28 @@ docs: fix typo and remove duplicated section in CONTRIBUTING.md
 - PR 描述用英文，客气、简短、不寒暄
 - 提交信息遵循他们的习惯：`docs: ...` / `fix: ...`（仓库大量使用 Conventional Commits）
 - 别动 `README.md` 和 `DIRECTORY.md`
+
+---
+
+## ✅ 状态（2026-09-18 已执行）
+
+**候选 1（CONTRIBUTING.md 拼写 `pslease`→`please`）已提交 PR：**
+
+- **PR 链接**：https://github.com/TheAlgorithms/Python/pull/15375 （状态 OPEN）
+- **fork**：`jiangnan0541/Python`（GitHub 给 fork 沿用上游仓库名 "Python"；父仓库已核实 = `TheAlgorithms/Python`）
+- **分支**：`fix/contributing-typo`（基于 fork 的 `master` HEAD `a3815789` 创建）
+- **commit**：`64ddc75a70c62061d91dab63eec81363d2cea173`
+- **提交信息**：`docs: fix typo pslease to please in CONTRIBUTING.md`
+
+**操作方式（无需克隆大仓库）**：用 `gh api` 直接走 API ——
+
+1. `gh api -X POST repos/TheAlgorithms/Python/forks`（创建 fork，幂等）
+2. `gh api repos/jiangnan0541/Python/git/refs/heads/master --jq .object.sha` 取 master HEAD
+3. `gh api -X POST repos/jiangnan0541/Python/git/refs -f ref=refs/heads/fix/contributing-typo -f sha=<master>` 建分支
+   （⚠️ contents API 的 `branch` 参数**不会**自动建分支，必须先建好，否则 404）
+4. `gh api repos/jiangnan0541/Python/contents/CONTRIBUTING.md?ref=master` 取 `sha` + base64 内容
+5. 本地把 `pslease`→`please`、重新 base64，再 `gh api -X PUT .../contents/CONTRIBUTING.md -f branch=... -f content=<b64> -f sha=<原sha>`
+6. `gh pr create --repo TheAlgorithms/Python --head jiangnan0541:fix/contributing-typo --base master --title ... --body ...`
+
+> 参考克隆里未搜到 DCO / sign-off 要求，上游大概率不强制 DCO；PR 已正常 OPEN，等 CI 与 review。
+> 若后续要补第二个候选（删重复段落），建议另开一个 PR，保持"一个 PR 一件事"。
